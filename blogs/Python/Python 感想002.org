@@ -1,0 +1,52 @@
+#+TITLE: 立即执行 <code>map</code> 函数
+#+DATE: <2018-06-19 Sat>
+#+AUTHOR: Nasy
+#+TAGS: 花, flower, hana, 随笔, essay, python
+#+CATEGORIES: Flower, Eassy
+#+SUMMARY: 我永远喜欢 map
+#+COMMENT: Python 感想 002
+#+HREF: python-impression-002
+
+
+* 前言
+
+自从 ~Python 3~ 把 ~map~ 函数变为惰性的之后，那些没有返回值的函数，怎样立即执行，把函数式爱好者，不喜欢写 ~for~ 的我难住了，因为直接写 ~map(f, lst)~ 返回的是一个 ~<map at 0x17c249c50>~, 一个 ~generator~. 函数 ~f~ 并没有被执行呢。
+
+* 研究
+
+** 起初，我是用 ~list~.
+
+我为了执行这些，总是在外面套一层 ~list~ 函数，变为 ~list(map(f, lst))~ 。可想而知，这样是不好的，如果那个 ~lst~ 很大，里面的元素数量很多，最后生成一个 ~list~ 不但会拖慢速度，还会占很多内存（大概）。
+
+** 用 ~for~ 循环来替代 ~map~.
+
+我最早想到的，就是这个，就之前那个来说，很显然，可这样来替代 ~map~:
+
+#+BEGIN_SRC python
+    for l in lst:
+        f(l)
+#+END_SRC
+
+不过，一开始我就说了，不想用 ~for~ （好像是有点任性呢）。
+
+于是，这个方法不行🙅。
+
+** 最后，有了 ~all~ 和 ~any~.
+
+想要判断一个 ~list~ 中是否有 ~True~ ，就可以在标准库中发现了这两个函数 ~all~ 和 ~any~. 这两个函数一个是当 ~list~ 中全为 ~True~ 的时候，返回 ~True~ ，否则返回 ~False~ ，一个是当 ~list~ 中含有 ~True~ 的时候，返回 ~True~ ，否则 ~False~.
+
+当我们的 ~f~ 没有返回值的时候，在 ~Python 3~ 中就是 ~False~ ，因此，此时只需要简单的 ~any(map(f, lst))~ 就可以立即执行这个没有返回值的 ~map~ 了。不过要注意的是， *当函数 ~f~ 具有返回值，而且 ~bool~ 值为 ~True~ 的时候， ~any~ 就失效了，或者说，运行的不完整。* 毕竟，有了返回值，为什么还要这样执行它呢？快把那些命令提出来，单独作为一个函数啊喂！
+
+* 几条关于 ~map~ 的事项
+
+（非新手请直接略过，不过，大佬们大概也不会来看我的..）我在想之后或许会有一篇 ~Python~ 函数式感想出现呢w
+
++ ~map~ 速度是比 ~for~ 循环要快的，当然，列表推导式除外（只适用于目前的 ~Python 3~ ）
++ 列表推导式其实可以很简单的用 ~map~ + ~filter~ 的组合替代，虽然效率不怎么高:
+
+#+BEGIN_SRC python
+    (i + i for i in range(10) if i > 5)
+    map(lambda x: x + i, filter(lambda x: x > 5, range(10)))
+#+END_SRC
+
++ 当然，用上 ~itertools~ 库中的函数，比如 ~takewhile~ ，会更棒哟!

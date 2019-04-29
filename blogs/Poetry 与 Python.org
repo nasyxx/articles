@@ -1,0 +1,62 @@
+#+TITLE: Poetry 与 Python
+#+DATE: <2018-08-15 Wed>
+#+AUTHOR: Nasy
+#+TAGS: 草, grass, tools, open-source
+#+CATEGORIES: Grass, Tools
+#+SUMMARY: 好用的 Python 依赖管理以及打包工具 Poetry.
+#+HREF: poetry-and-python
+#+yooo: Yooooooooooo
+
+* Poetry 是什么？
+
+Poetry: https://poetry.eustace.io
+
+Poetry 是一个 Python 的依赖管理以及打包工具。 用他官方的话说就是：
+
+#+BEGIN_QUOTE
+Poetry is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.
+#+END_QUOTE
+
+* 遇见
+
+对于 Python 来说，虚拟环境一直有很多选择，无论是直接使用自带的 ~virtualenv~ ，还是通过 ~pyenv~ 使用 ~virtualenv~ ，我都觉得，用起来很不爽。原因有两个：
+
+- 配置麻烦
+- 莫名其妙多了个文件夹
+- 还多了一些文件
+
+当然，之后， ~pipenv~ 出世，基本把所有的内容装到了同一个文件里面。 遗憾的是，也许是乱七八糟的功能之类的太多了，我似乎用不习惯。 我所想要的是一个如同 ~cargo~ 或者 ~stack~ 那样的东西， ~pipenv~ 并不能很顺畅的达到这样的需求，该写 ~makefile~ 还是要写。
+
+在一次日常浏览 GitHub Trending 的时候，我发现了 ~Poetry~, 这个超棒的工具。
+
+* 如诗一般地使用
+
+一直以来，如果是我个人使用，我都是不用任何虚拟环境的，一是麻烦，二是觉得没必要。 直到有一个有一个该死的库 ~prompt-toolkit~ 2.x 版本与 1.x 版本不兼容，而且一些经常使用的包还经常用它。 没错，说的就是 ~ipython~ 。 才让我开始注意虚拟环境，并且在一些时候使用它。 事实上，就算是 Haskell，我也是不怎么使用 local 环境下的 ~ghci~ 毕竟，没有高亮，没有很多乱七八糟的东西，看起来太不舒服了。 在认识 ~Poetry~ 之前，我一直是直接使用 ~virtualenv~ 或者 ~pipenv~ 。 很惭愧，因为没做过什么特别大的项目，我几乎不需要把环境隔离。
+
+~Poetry~ 在各个方面都太方便了，比如说，他使用 ~pyproject.toml~ 这样的配置文件，而非其他的那些很多乱七八糟的。 另一方面，它提供了诸如 ~new~, ~publish~, ~build~, ~run~ 这样的命令，可以说与 ~stack~ 体验一致。 最方便的是，不用再写 ~makefile~ 了。 你可以这样，在 ~pyproject.toml~ 里面写上:
+
+#+BEGIN_SRC toml
+  [tool.poetry.scripts]
+  crawl_it = "crawler:main"
+#+END_SRC
+
+然后简单的 ~poetry run crawl_it~ 来运行，不需要费心在 ~makefile~ 里面写上:
+
+#+BEGIN_SRC makefile
+  crawl-it:
+          poetry run python crawler.py
+  .PHONY: crawl-it
+#+END_SRC
+
+还有一点也很重要，有了这东西，可以保证工作文件夹干净，不会出现虚拟环境的文件夹。
+
+----------
+
+我自己使用 Python，最主要就是用来写爬虫。 用上 ~Poetry~ 之后，个人最经常的操作就是:
+
+#+BEGIN_SRC sh
+  mkdir xxxx         # 创建文件夹 xxxx
+  cd xxxx            # 进入
+  poetry init        # 项目初始化(会有一些选项选择)
+  emacsclient -c .   # 打开最喜欢的编辑器
+#+END_SRC

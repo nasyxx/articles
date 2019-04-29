@@ -1,0 +1,97 @@
+#+TITLE: About
+#+DATE: <2018-05-03 Thu>
+#+AUTHOR: Nasy
+#+TAGS: about
+#+CATEGORIES: About
+#+SUMMARY: About this blog and nasy, 关于此 blog 和 nasy.
+#+COMMENT: message board
+#+CTITLE: Message Board
+#+HREF: about
+
+* 关于 Nasy
+
+Nasy 就是 Nasy 啦！虽然现在这个 blog 只有一人在维护，但是，我目前的人生中，还有另外两个 Nasy，都是生命中不可缺少的存在呢！
+
+至于我嘛，见 >> [[https://nasy.me]][fn:todo].
+
+
+* 关于此博客
+
+这个博客是我的一个尝试，基本上是从 $0$ 开始[fn:1]，从基础的 markup 的文档渲染生成可以使用的 ~HTML~ ，到前端展现给我自己以及大家[fn:2]，全都是自己慢慢的搞定的。
+
+** 思想，思路与过程
+
+*** Server
+
+这次是一个尝试嘛，服务端的渲染部分是 Python[fn:py] 写的，而处理那些 /requests/ 以及 /response/ 的部分，则是用 Haskell[fn:hs] 写的[fn:3]。也是一种写代码风格的尝试，这一次，我尽我所能用了函数式，不使用面向对象来搞定，主要是 Haskell 给了我各种各样的改变，当然 Elm[fn:elm] 也是同样的，影响风格的东西...
+
+*** Org mode[fn:org]
+
+首先是，我很明确，我将要使用 Org mode 来进行 blog 的写作。原因很简单，对于我来说， ~markdown~ 太简单了，有些时候，我想一边计算，一边运行某些代码，一边把结果输出出来，由于个人的专业或者是一些兴趣爱好，不是一个很罕见的需求。但是，这是基本的 ~markdown~ 办不到的，而 Org mode 是可行的。不过最主要的是，我用 ~emacs~ 啊！都用 ~emacs~ 了，怎么能不接着使用 Org mode 呢？
+
+与 ~markdown~ 的比起来，Org mode 也有一个比较麻烦的东西，这东西不像 ~markdown~ 一样，遍地都是渲染器，什么语言都有将它转为 ~HTML~ 的库。 Org mode 需要使用 ~emacs~ 来生成 ~HTML~ 或者其他格式的东西，虽然 GitHub[fn:github] 上也能预览 ~Org~ 文件，但是很残念，稍微多一点的东西都无法正确显示出来。原先的 blog ，我使用的是 ~hexo~ [fn:hexo]，虽然有几个插件它支持 Org mode，然而遗憾的是，一些特有的用法，都无法用插件体现出来。
+
+这次从 $0$ 开始，解决 ~Org~ 文件转为 ~HTML~ 是一个很艰难的差事...我去研究了一下，那几个 ~hexo~ 的 Org mode 源码，发现大都是自己写了一个 ~ox-html~ 的东西，把 ~Org~ 文件转为 ~HTML~ 。GitHub 上也有几个 ~org to html~ 的库。不过嘛，后来我突然明白起来，这是我自己使用嘛，何必那么麻烦，直接简单的一条命令 ~org-html-export-to-html~ 不就可以了嘛...于是就有了下面这一段 Python 的 subprocess.
+
+#+BEGIN_SRC python
+subprocess.Popen(
+    "emacsclient --socket-name=org_to_html "
+    f"-e '(progn (find-file \"{path}\") "
+    "(setq org-export-preserve-breaks nil)"
+    "(setq org-export-with-emphasize t)"
+    "(setq org-export-with-special-strings t)"
+    "(setq org-export-with-sub-superscripts t)"
+    "(setq org-export-headline-levels 4)"
+    "(setq org-export-with-latex t)"
+    "(setq org-export-with-fixed-width t)"
+    "(setq org-export-with-section-numbers nil) "
+    "(setq org-export-with-toc 3)"
+    "(setq org-export-with-tables t)"
+    "(org-html-export-to-html))' ",
+    shell = True,
+    stdout = subprocess.PIPE,
+    stderr = subprocess.PIPE,
+)
+#+END_SRC
+
+剩下的一些就很简单了，就是从原始的 Org 文件里，读取什么 Tags 啊，Categories 啊，Title 之类的。大概就是，一行一行往下读，然后分析一下这一行是否有我要的内容。
+
+*** Elm
+
+其实，最开始，我并不是使用 Elm 来作为我网站的前端的，我本来，只想使用简单的静态网页。不过，某一天，突然见到了 Elm 这样一门语言，于是，这一次，也就顺便使用这门语言来写一写前端，也是一种练习嘛。最后，Elm 的体验还行。不过由于最开始，我对其理解不够透彻，有些地方，一开始就做的不是很好，导致后来明白的时候，想改也很麻烦了...也就那样摆着了。
+
+如果以后，有机会重构的话，我想，我还是会选择 Elm 或者 Haskell 里的 miso 来写吧！已然成为函数式的粉丝[fn:4]。
+
+*** Hakyll
+
+在又过了不久之后，我终于忍受不了坑那么多的 Elm 了，于是，目前是 Hakyll 最为静态网站的生成器...
+
+*** Style
+
+作为一个 blog 的第一印象，就是这个风格了吧！不知道看到我这个星星✨背景，霓虹特效风格感想是什么呢？当然，我不会去手写 ~CSS~ 的，用了下 Stylus[fn:styl] 减轻了一些痛苦。
+
+** 感谢
+
++ laobubu[fn:lbb]，好基友，不管怎样先写上就是了。虽然我也记不清他在这里起了什么作用，总之是留下了些什么在代码里面了。哦，是背景跟随滚动...
++ IceYu[fn:IceYu], Twitter 的一个朋友？一眼指出了 Safari 上的该死的选中有很多边框的问题出在哪儿。
++ 学校食堂，在不比外面贵的情况下，分量也够，价格也不错，味道也不差。总之，为我写这个提供了充足的能量。
+
+* ？？
+
+也许还应该有个英文版本的 About...
+
+
+[fn:1] 当然，用到的很多包，很多工具都不是我写的。
+[fn:2] 没几个人看吧...
+[fn:3] 虽然也用 Python 写了一个...
+[fn:4] 尽管有些时候，以非函数形式会更方便。
+[fn:org] [[https://orgmode.org][Org mode]] is for keeping notes, maintaining TODO lists, planning projects, and authoring documents with a fast and effective plain-text system.
+[fn:github] https://github.com
+[fn:hexo] [[https://hexo.io][Hexo]], a fast, simple & powerful blog framework.
+[fn:py] [[https://python.org][Python]]
+[fn:hs] [[https://www.haskell.org][Haskell]], an advanced, purely functional programming language.
+[fn:elm] [[https://elm-lang.org][Elm]], a delightful language for reliable webapps.
+[fn:styl] [[http://stylus-lang.com][Stylus]], EXPRESSIVE, DYNAMIC, ROBUST CSS
+[fn:lbb] [[https://laobubu.net][laobubu]], 好基友...
+[fn:IceYu] [[https://twitter.com/iceyu233][IceYu]]
+[fn:todo] 依然在建设中...

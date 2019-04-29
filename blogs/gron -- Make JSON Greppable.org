@@ -1,0 +1,46 @@
+#+TITLE: gron -- Make JSON Greppable
+#+DATE: <2018-09-04 Tue>
+#+AUTHOR: Nasy
+#+TAGS: 草, grass, tools, open-source
+#+CATEGORIES: Grass, Tools
+#+SUMMARY: gron -- Make JSON Greppable
+#+HREF: gron---make-json-greppable
+
+* gron
+
+[[https://github.com/tomnomnom/gron][gron]] 是一个命令行工具，在你的终端里使用的小工具。效果是，把 =JSON= 转为一行一行的，可以被 ~grep~ 的形式。下面就来看看是什么样子的，多的就不说了，反正，很有用就是了。
+
+首先是，用他官方的例子来看看:
+
+#+BEGIN_SRC sh
+▶ gron "https://api.github.com/repos/tomnomnom/gron/commits?per_page=1" | fgrep "commit.author"
+json[0].commit.author = {};
+json[0].commit.author.date = "2016-07-02T10:51:21Z";
+json[0].commit.author.email = "mail@tomnomnom.com";
+json[0].commit.author.name = "Tom Hudson";
+#+END_SRC
+
+好了，总的来说，就是， =gron= 加上某个 =JSON= 的文件或者链接，把这个 =JSON= 转为这种，key1.key2.key3 = value 的形式，然后，就能很简单的进行下一步 =grep= 了。
+
+当然，也能把这样形式的东西转回 =JSON= 只需要 =gron --ungron= 即可。
+
+#+BEGIN_SRC sh
+▶ gron testdata/two.json | grep likes | grep -v cheese
+json.likes = [];
+json.likes[0] = "code";
+json.likes[2] = "meat";
+▶ gron testdata/two.json | grep likes | grep -v cheese | gron --ungron
+{
+  "likes": [
+    "code",
+    null,
+    "meat"
+  ]
+}
+#+END_SRC
+
+更多的请看: [[https://github.com/tomnomnom/gron#usage]]
+
+* Postscript
+
+这是一篇旧文章，写于 2018.5。

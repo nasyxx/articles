@@ -1,0 +1,62 @@
+#+TITLE: Incremental Update
+#+DATE: <2017-07-28 Fri>
+#+AUTHOR: Nasy
+#+TAGS: 鱼, fish, 算法, algorithm
+#+CATEGORIES: Fish, Algorithm
+#+SUMMARY: Compare the files within two folders.
+#+HREF: incremental-update
+
+* About this algorithm
+
+This algorithm aims to compare the files within two folders. The files within B folder are more than the A folder. Put these files which are not in A folder into a separate folder C. If files already in C folder, pass it.
+
+** How
+
+Use the nature and operation of the collection.
+
+* Implemented in Python
+
+#+BEGIN_SRC Python
+import os
+import shutil
+
+
+def incremental_update(a_folder_path: str,
+                       b_folder_path: str,
+                       c_folder_path: str) -> None:
+    """Incremental update.
+
+    Args:
+        a_folder_path str: A folder path.
+        b_folder_path str: B folder path.
+        c_folder_path str: C folder path.
+
+    Return:
+        None
+    """
+    # Compare files between 3 folders.
+    c_files = (set(os.listdir(a_folder_path))
+               - set(os.listdir(b_folder_path))
+               - set(os.listdir(c_folder_path)))
+
+    if not os.path.isdir(c_folder_path):
+        os.mkdir(c_folder_path)
+
+    def _copy(f_path: str) -> None:
+        """Copy file from B to C.
+
+        Args:
+            f_path: str. The file in B folder.
+        """
+        shutil.copy(
+            os.path.join(b_folder_path, f_path),
+            os.path.join(c_folder_path, f_path))
+
+    for f_path in c_files:
+        _copy(f_path)
+
+#+END_SRC
+
+* Why this
+
+A friend of mine wants to use it to do something interesting (I'm not sure...).

@@ -1,0 +1,106 @@
+#+TITLE: Python 字符串清理的思考
+#+DATE: <2018-06-15 Fri>
+#+AUTHOR: Nasy
+#+TAGS: 花, flower, hana, 随笔, essay, python
+#+CATEGORIES: Flower, Eassy
+#+SUMMARY: 字符串清理 <code>replace</code> or <code>strip</code> 速度验证以及思考。
+#+COMMENT: Python 感想 001
+#+HREF: python-impression-001
+
+* 验证测试
+两三年前，在某个地方（或许是 cookbook），看到过一条:
+
+#+BEGIN_QUOTE
+  在清理字符串的时候，尽量用 @@html: <del> @@ ~replace~ @@html: </del> @@ ~strip~ ，因为在效率上高出很多。
+#+END_QUOTE
+
+这两天正好有机会，试了试，事实确实如此。
+
+直接看结果吧！
+
+原始字符串是这样的：
+
+#+BEGIN_SRC python
+  test_string = "      ******************sss--------------------       \n"
+#+END_SRC
+
+然后，我的测试呢，也是简单的用了 ~timeit~ ，并没有更深入的去做。
+
+#+BEGIN_SRC python
+  >>> %timeit test_string.replace("*", "").replace("-", "").replace(" ", "").replace("\n", "")
+
+  1.47 µs ± 4.14 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+
+  >>> %timeit test_string.strip(" *-")
+
+  458 ns ± 11 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+#+END_SRC
+
+#+html: <del>
+大概就是这样， ~replace~ 比 ~strip~ 的速度优势太大了。
+#+html: </del>
+
+** New :: <2018-12-25 Tue>
+
+~strip~ 比 ~replace~ 优势很大，三倍有余
+
+不过嘛， ~strip~ 始终是只能清理两侧的，字中间的，还是要靠 ~replace~ 或者正则。
+
+* 思考
+
+正好嘛，最近又更加深入的了解了点文学编程。虽然用 ~Python~ 要达到文学编程，还有很长的一段路需要走，但是，并不代表，它不能去用那种思想去搞事。于是遇到了一个困扰我的问题：
+
+*在连续几个 ~replace~ 的情况下，如何有效进行漂亮的注释？*
+
+#+BEGIN_SRC python
+  string.replace("\n", "").replace(">", "").replace("<", "").replace("#+", "")
+#+END_SRC
+
+一直以来，或者说，知道 ~replace~ 速度更快之后，一直以来，我的这些字符串替换操作都是能用 ~replace~ 就不用其他的，不能用的时候，大概就是要用正则的时候了。不过就像大家所知道的那样，一个接一个的 ~.replace~ 是很丑陋，而且不方便注释，很不文学。虽然也有办法让他对齐 `.` 如下面所示，变得比以前漂亮多了，但是依然不能够很好的加上注释（`\`后面是不能加上注释的）。
+
+#+BEGIN_SRC python
+  string.replace("\n", "")\
+        .replace("<", "") \
+        .replace(">", "") \
+        .replace("#+", "")
+#+END_SRC
+
+直到我 ~Haskell~ 写的多了，有一天突然就醒悟了，其实我没必要一定写在 ~replace~ 的这个地方，我可以把它写成一个函数（虽然这让时间开销变大，似乎又本末倒置了）。
+
+#+BEGIN_SRC python
+  def clean_string(string: str) -> str:
+      """Clean string.
+
+      Strip `\n` as it used in the end of a line.
+      ...
+      """
+      return string.replace("\n", "")\
+                   .replace("<", "") \
+                   .replace(">", "") \
+                   .replace("#+", "")
+#+END_SRC
+
+这样，我把解释写在函数里面，清理的时候， ~clean_string(string)~ 就好了。
+
+* 更新
+
+** Jul 3, 2018
+
+是的，我明白， ~\~ 并不是一个很完美的解决方案，比如上面的代码，完全可以用括号括起来，然后 ~return~ ：
+
+#+BEGIN_SRC python
+  return (
+      string.replace("#", "")
+      .replace("+", "")
+      .replace("12", "")
+      .replace("#", "")
+      .replace("+", "")
+      .replace("12", "")
+  )
+#+END_SRC
+
+不过，我很讨厌括号，特别是需要我手动括起来的括号，也就是，不能像写 Lisp 的时候一样，只需要写单边的括号，甚至，只需要缩进就能自动补上括号。因此，这个方案在有新的 Python code formatter 实现以前，我是不打算使用的。当然现在还真有一个 formatter [[https://github.com/ambv/black][black]] 实现了它。尽管如此，这也是后话了，这篇文章完成之时(2018-06-15)，black 尚不能轻松的在 Emacs 或者 Atom 中使用，要使用它，还需要命令行，并不能在保存文件的同时，立即 format . 而 Python Language Server 支持 black (pyls-black) 则是在 2018-06-17.
+
+** Dec 25, 2018
+
+啊，感谢 [[https://github.com/frostming][frostming]]！愚蠢的我竟然 n \mu 不分，导致写反。（重要的是思想，（碎碎念，诶，我也太年轻了。

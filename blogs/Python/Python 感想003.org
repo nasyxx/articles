@@ -1,0 +1,64 @@
+#+TITLE: Python 3.7 带来的 Bug
+#+DATE: <2018-08-15 Wed>
+#+AUTHOR: Nasy
+#+TAGS: 花, flower, hana, 随笔, essay, python
+#+CATEGORIES: Flower, Essay
+#+SUMMARY: 关键词 async 导致 Tensorflow 不能用。jedi 也有奇怪的问题。
+#+COMMENT: Python 感想 003
+#+HREF: python-impression-003
+
+我很喜欢尝鲜，无论是生活上的，还是电脑上正在使用的内容。当然了，伴随着新事物的新特性，必然会带来很多奇奇怪怪的 bug。
+
+* Python 3.7 不能再使用 async 作为关键词
+
+先看两个例子吧：
+
+#+BEGIN_SRC python
+  Python 3.6.6 (default, Aug  3 2018, 18:10:32)
+  [GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.10.38)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> async = ""
+  >>> async
+  ''
+#+END_SRC
+
+#+BEGIN_SRC python
+  Python 3.7.0 (default, Aug 13 2018, 03:32:41)
+  [Clang 10.0.0 (clang-1000.10.38)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> async = ""
+    File "<stdin>", line 1
+      async = ""
+            ^
+  SyntaxError: invalid syntax
+#+END_SRC
+
+我相信，绝大多数情况下，这条不会对你产生任何影响，只要你不把 async 作为关键词。
+
+不过，这个就苦了用 Tensorflow 的家伙了呢。问题是这样的，Tensorflow 中使用了 async 作为关键词，而且，这其中的部分代码还是 C/C++ 生成的...于是，无论你是从源码编译新的 Tensorflow，还是直接使用某个 whl 安装，在最终使用的时候，都会失败。（我才不会说当时，这个问题坑了我好久，还以为是我哪里的 cython 写错了！
+
+好在，已经慢慢解决了。具体看这些 [[https://github.com/tensorflow/tensorflow/pull/20766/files/7000c3e30f7c5daf15e34f9a23a6ad3c98239ce3#diff-a1983d51233d117d820e7f1f367b157b][commit]].
+
+Sample:
+
+#+BEGIN_SRC python
+  tensorflow::Status CreateRemoteContexts(
+      const std::vector<string>& remote_workers, int64 rendezvous_id,
+      const tensorflow::ServerDef& server_def,
+      tensorflow::eager::EagerClientCache* remote_eager_workers, bool async,
+      tensorflow::eager::EagerClientCache* remote_eager_workers, bool is_async,
+#+END_SRC
+
+解决方案：用 ~pyenv~ 吧！
+
+* Jedi 的补全
+
+这个问题是我在使用 Emacs 时遇到的。当时，无论是 Emacs 的 ~lsp-mode~ 还是 ~anaconda-mode~ 甚至是 ~elpy~ 都遇到了一个问题，补全的时候，只要我定义函数的时候，加上了 type hinting，就不会出现。在我尝试了很多之后，终于意识到这个是 jedi 的问题: [[https://github.com/davidhalter/jedi/issues/1198][issue/1198]].
+
+（我当时认为是 Emacs 的问题，还在 emacs-china 提了个问 [[https://emacs-china.org/t/python-type-hint/6663][QUESTION]]，真是感想热心群众的帮忙呢。
+
+解决方案：用 ~pyenv~ 吧！
+
+------------
+
+嘛，其实，说了这么多，我想说的就是，遇到 python 的版本的问题，别犹豫，用 pyenv 吧！
