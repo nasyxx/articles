@@ -1,7 +1,7 @@
 #+TITLE: Python 字符串清理的思考
 #+DATE: <2018-06-15 Fri>
 #+AUTHOR: Nasy
-#+TAGS: 花, flower, hana, 随笔, essay, python
+#+TAGS: 花, hana, 🌸, 随笔, essay, python
 #+CATEGORIES: Flower, Eassy
 #+SUMMARY: 字符串清理 <code>replace</code> or <code>strip</code> 速度验证以及思考。
 #+COMMENT: Python 感想 001

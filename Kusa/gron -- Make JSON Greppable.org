@@ -1,8 +1,7 @@
 #+TITLE: gron -- Make JSON Greppable
 #+DATE: <2018-09-04 Tue>
 #+AUTHOR: Nasy
-#+TAGS: 草, grass, tools, open-source
-#+CATEGORIES: Grass, Tools
+#+TAGS: 草, kusa, 🍀, tools, open-source
 #+SUMMARY: gron -- Make JSON Greppable
 #+HREF: gron---make-json-greppable
 

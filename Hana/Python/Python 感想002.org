@@ -1,8 +1,7 @@
 #+TITLE: 立即执行 <code>map</code> 函数
 #+DATE: <2018-06-19 Sat>
 #+AUTHOR: Nasy
-#+TAGS: 花, flower, hana, 随笔, essay, python
-#+CATEGORIES: Flower, Eassy
+#+TAGS: 花, hana, 🌸, 随笔, essay, python
 #+SUMMARY: 我永远喜欢 map
 #+COMMENT: Python 感想 002
 #+HREF: python-impression-002
@@ -39,7 +38,7 @@
 
 * 几条关于 ~map~ 的事项
 
-（非新手请直接略过，不过，大佬们大概也不会来看我的..）我在想之后或许会有一篇 ~Python~ 函数式感想出现呢w
+（非新手请直接略过，不过，大佬们大概也不会来看我的..）我在想之后或许会有一篇 ~Python~ 函数式感想出现呢 w
 
 + ~map~ 速度是比 ~for~ 循环要快的，当然，列表推导式除外（只适用于目前的 ~Python 3~ ）
 + 列表推导式其实可以很简单的用 ~map~ + ~filter~ 的组合替代，虽然效率不怎么高:

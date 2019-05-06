@@ -1,8 +1,7 @@
 #+TITLE: Poetry 与 Python
 #+DATE: <2018-08-15 Wed>
 #+AUTHOR: Nasy
-#+TAGS: 草, grass, tools, open-source
-#+CATEGORIES: Grass, Tools
+#+TAGS: 草, kusa, 🍀, tools, open-source
 #+SUMMARY: 好用的 Python 依赖管理以及打包工具 Poetry.
 #+HREF: poetry-and-python
 #+yooo: Yooooooooooo

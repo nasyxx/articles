@@ -1,8 +1,7 @@
 #+TITLE: Incremental Update
 #+DATE: <2017-07-28 Fri>
 #+AUTHOR: Nasy
-#+TAGS: 鱼, fish, 算法, algorithm
-#+CATEGORIES: Fish, Algorithm
+#+TAGS: 鱼, fish, 🐠, 算法, algorithm
 #+SUMMARY: Compare the files within two folders.
 #+HREF: incremental-update
 

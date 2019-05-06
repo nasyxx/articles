@@ -2,7 +2,6 @@
 #+DATE: <2018-05-03 Thu>
 #+AUTHOR: Nasy
 #+TAGS: about
-#+CATEGORIES: About
 #+SUMMARY: About this blog and nasy, 关于此 blog 和 nasy.
 #+COMMENT: message board
 #+CTITLE: Message Board
