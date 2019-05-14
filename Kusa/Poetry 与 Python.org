@@ -1,10 +1,10 @@
-#+TITLE: Poetry 与 Python
-#+DATE: <2018-08-15 Wed>
-#+AUTHOR: Nasy
-#+TAGS: 草, kusa, 🍀, tools, open-source
-#+SUMMARY: 好用的 Python 依赖管理以及打包工具 Poetry.
-#+HREF: poetry-and-python
-#+yooo: Yooooooooooo
+#+title: Poetry 与 Python
+#+date: <2018-08-15 Wed>
+#+author: Nasy
+#+tags: tools, open-source
+#+ltags: 草, kusa, 🍀
+#+summary: 好用的 Python 依赖管理以及打包工具 Poetry.
+#+href: poetry-and-python
 
 * Poetry 是什么？
 

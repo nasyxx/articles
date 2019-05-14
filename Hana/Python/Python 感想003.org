@@ -1,10 +1,11 @@
-#+TITLE: Python 3.7 带来的 Bug
-#+DATE: <2018-08-15 Wed>
-#+AUTHOR: Nasy
-#+TAGS: 花, hana, 🌸, 随笔, essay, python
-#+SUMMARY: 关键词 async 导致 Tensorflow 不能用。jedi 也有奇怪的问题。
-#+COMMENT: Python 感想 003
-#+HREF: python-impression-003
+#+title: Python 3.7 带来的 Bug
+#+date: <2018-08-15 Wed>
+#+author: Nasy
+#+tags: 随笔, essay, python
+#+ltags: 花, hana, 🌸
+#+summary: 关键词 async 导致 Tensorflow 不能用。jedi 也有奇怪的问题。
+#+comment: Python 感想 003
+#+href: python-impression-003
 
 我很喜欢尝鲜，无论是生活上的，还是电脑上正在使用的内容。当然了，伴随着新事物的新特性，必然会带来很多奇奇怪怪的 bug。
 

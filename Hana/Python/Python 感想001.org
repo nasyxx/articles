@@ -1,11 +1,12 @@
-#+TITLE: Python 字符串清理的思考
-#+DATE: <2018-06-15 Fri>
-#+AUTHOR: Nasy
-#+TAGS: 花, hana, 🌸, 随笔, essay, python
-#+CATEGORIES: Flower, Eassy
-#+SUMMARY: 字符串清理 <code>replace</code> or <code>strip</code> 速度验证以及思考。
-#+COMMENT: Python 感想 001
-#+HREF: python-impression-001
+#+title: Python 字符串清理的思考
+#+date: <2018-06-15 Fri>
+#+author: Nasy
+#+tags: 随笔, essay, python
+#+ltags: 花, hana, 🌸
+#+categories: Flower, Eassy
+#+summary: 字符串清理 <code>replace</code> or <code>strip</code> 速度验证以及思考。
+#+comment: Python 感想 001
+#+href: python-impression-001
 
 * 验证测试
 两三年前，在某个地方（或许是 cookbook），看到过一条:

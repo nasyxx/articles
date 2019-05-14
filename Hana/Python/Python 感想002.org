@@ -1,10 +1,11 @@
-#+TITLE: 立即执行 <code>map</code> 函数
-#+DATE: <2018-06-19 Sat>
-#+AUTHOR: Nasy
-#+TAGS: 花, hana, 🌸, 随笔, essay, python
-#+SUMMARY: 我永远喜欢 map
-#+COMMENT: Python 感想 002
-#+HREF: python-impression-002
+#+title: 立即执行 <code>map</code> 函数
+#+date: <2018-06-19 Sat>
+#+author: Nasy
+#+tags: 随笔, essay, python
+#+ltags: 花, hana, 🌸
+#+summary: 我永远喜欢 map
+#+comment: Python 感想 002
+#+href: python-impression-002
 
 
 * 前言
